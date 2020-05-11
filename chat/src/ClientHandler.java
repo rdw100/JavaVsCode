@@ -12,31 +12,23 @@ import java.util.Scanner;
  */
 public class ClientHandler implements Runnable 
 {
-   /**
-   The socket for a client to make request
-   */
+   // The socket for a client to make request
    private Socket socket;
    
-   /**
-   The output from the socket
-   */
+   // The output from the socket
    private PrintWriter out;
    
-   /**
-   The input from the socket
-   */
+   // The input from the socket
    private Scanner in;
    
-   /**
-   The chat server location
-   */
+   // The chat server location
    private Server server;
    
    /**
-   Initializes the client handler
-   @param server The chat server location
-   @param socket The socket for a client to make request
-   */
+    * Initializes the client handler
+    * @param server The chat server location
+    * @param socket The socket for a client to make request
+    */
    public ClientHandler(Server server, Socket socket)
    {
       this.server = server;
@@ -44,17 +36,17 @@ public class ClientHandler implements Runnable
    }
    
    /**
-   Retrieves socket output stream
-   @return Returns output stream from server
-   */
+    * Retrieves socket output stream
+    * @return Returns output stream from server
+    */
    private PrintWriter getWriter()
    {
       return out;
    }
    
    /**
-   Send and get text/data from the client
-   */
+    * Send and get text/data from the client
+    */
    public void run() 
    {
       try
