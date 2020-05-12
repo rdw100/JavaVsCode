@@ -17,10 +17,7 @@ public class ClientHandler implements Runnable
    
    // The output from the socket
    private PrintWriter out;
-   
-   // The input from the socket
-   private Scanner in;
-   
+ 
    // The chat server location
    private Server server;
    
@@ -49,6 +46,8 @@ public class ClientHandler implements Runnable
     */
    public void run() 
    {
+      // The input from the socket
+      Scanner in;
       try
       {
          try

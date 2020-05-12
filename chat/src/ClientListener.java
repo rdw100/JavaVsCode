@@ -103,20 +103,18 @@ public class ClientListener implements Runnable
     */
    public String serverFormatter(String text)
    {
-      String serverText = "\u001B[90m" + text+ "\u001B[0m";
-      return serverText; 
+      return "\u001B[90m" + text + "\u001B[0m"; 
    }
 
    /**
     * Formats server response
     * @param code Ansi escape code for background color
-    * @param text Server response    * 
+    * @param text Server response     
     * @return Returns formatted server response
     */
    public String serverFormatter(Integer code, String text)
    {
-      String serverText = "\u001B[" + code + "m" + text + "\u001B[0m";
-      return serverText; 
+      return "\u001B[" + code + "m" + text + "\u001B[0m";
    }
 
    /**

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *The server broadcasts client's sent messages.  
@@ -17,13 +18,7 @@ public class Server
    private int serverPort;
    
    // The arraylist collection of connencted clients
-   private ArrayList<ClientHandler> clients;
-   
-   // The object to listen on a specific port
-   private ServerSocket serverSocket;
-   
-   // The object reading from and writing to the socket
-   private Socket socket;
+   private List<ClientHandler> clients;
 
    /**
     * Creates the chat server.
@@ -46,7 +41,7 @@ public class Server
    /**
     * Gets a collection of connected client
     */
-   public ArrayList<ClientHandler> getClients()
+   public List<ClientHandler> getClients() //ArrayList<ClientHandler> getClients()
    {
       return clients;
    }
@@ -72,9 +67,10 @@ public class Server
     */
    private void start()
    {
-      clients = new ArrayList<ClientHandler>();
-      serverSocket = null;
-      
+      clients = new ArrayList<>();
+      Socket socket = null;
+      ServerSocket serverSocket = null;
+
       if (isPortOpen(serverPort)) 
       {
          try 
@@ -83,10 +79,10 @@ public class Server
             serverSocket = new ServerSocket(serverPort);
             System.out.println("Chat Server started: " + serverSocket.getLocalSocketAddress() + "\n");
             
-            // Wait for client connections.
-            while (true)
-            {
-               try
+            try
+            {            
+               // Wait for client connections.
+               while (!serverSocket.isClosed())
                {
                   System.out.println("Waiting for clients to connect ..."); 
                   socket = serverSocket.accept();
@@ -95,12 +91,16 @@ public class Server
                   Thread thread = new Thread(client);
                   thread.start();
                   clients.add(client);
-               } 
-               catch (IOException ex)
-               {
-                  System.out.println("Client connection failed: " + serverPort);
-               }
-            }                     
+               }  
+            } 
+            catch (IOException ex)
+            {
+               System.out.println("Client connection failed: " + serverPort);
+            }
+            finally
+            {
+               serverSocket.close();
+            }        
          } 
          catch (IOException e)
          {         
